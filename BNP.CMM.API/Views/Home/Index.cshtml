@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "BNP CMM";
+}
+
+<div>
+    <form>
+        <table>
+            <tr>
+                <td><label for="mes">Mês:</label></td>
+                <td><input type="number" id="mes" name="mes" min="1" max="12"></td>
+                <td><label for="ano">Ano:</label></td>
+                <td><input type="number" id="ano" name="ano" min="1900" max="2100"></td>
+            </tr>
+            <tr>
+                <td><label for="produto">Produto:</label></td>
+                <td>
+                    <select id="produto" name="produto">
+                        <option value="">Selecione</option>
+                        <option value="produto1">Produto 1</option>
+                        <option value="produto2">Produto 2</option>
+                    </select>
+                </td>
+                <td><label for="cosif">Cosif:</label></td>
+                <td>
+                    <select id="cosif" name="cosif">
+                        <option value="">Selecione</option>
+                        <option value="cosif1">Cosif 1</option>
+                        <option value="cosif2">Cosif 2</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="valor">Valor:</label></td>
+                <td><input type="text" id="valor" name="valor" placeholder="R$ 0,00"></td>
+            </tr>
+            <tr>
+                <td><label for="descricao">Descrição:</label></td>
+                <td colspan="3"><textarea id="descricao" name="descricao"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="buttons">
+                    <button type="reset">Limpar</button>
+                    <button type="button">Novo</button>
+                    <button type="submit">Incluir</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

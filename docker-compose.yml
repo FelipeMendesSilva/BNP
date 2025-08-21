@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13  
+    container_name: cmmpostgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: CMMDB
+    volumes:
+      - ./data:/var/lib/postgresql/data  # Mapeamento do volume
