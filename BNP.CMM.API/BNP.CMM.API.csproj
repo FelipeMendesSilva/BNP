@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BNP.CMM.Application\BNP.CMM.Application.csproj" />
+    <ProjectReference Include="..\BNP.CMM.Domain\BNP.CMM.Domain.csproj" />
+    <ProjectReference Include="..\BNP.CMM.Infra\BNP.CMM.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

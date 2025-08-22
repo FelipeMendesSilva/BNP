@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using BNP.CMM.API.Models;
+using BNP.CMM.Application.Requests;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BNP.CMM.API.Controllers
@@ -7,20 +9,34 @@ namespace BNP.CMM.API.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMediator _mediatr;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediatr = mediator;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            return View();
+            var model = new CmmViewModel()
+            {
+                Products = await _mediatr.Send(new GetProductsRequest(), cancellationToken),
+                Cosifs = await _mediatr.Send(new GetCosifsRequest(), cancellationToken)
+            };
+            return View(model);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Incluir(CmmViewModel model, CancellationToken cancellationToken)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                await _mediatr.Send(model.NewManualMovement, cancellationToken); // Retorna os erros para a View
+            }
+
+            // Processa os dados válidos
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

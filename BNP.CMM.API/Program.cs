@@ -1,7 +1,13 @@
+using BNP.CMM.API.IoC;
+using BNP.CMM.Application.Requests;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(GetProductsRequest).Assembly));
 
 var app = builder.Build();
 
