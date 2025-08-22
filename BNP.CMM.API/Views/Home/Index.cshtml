@@ -20,23 +20,21 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="produto">Produto:</label></td>
+                <td><label for="NewManualMovement.ProductId">Produto:</label></td>
                 <td>
-                    <select asp-for="Products">
-                        <option value="">Selecione</option>
-                        <option value="produto1">Produto 1</option>
-                        <option value="produto2">Produto 2</option>
+                    <select id="productSelected" asp-for="NewManualMovement.ProductId" class="form-control"
+                            asp-items="@(new SelectList(Model.Products, "ProductId", "Description"))">
+                        <option value="">-- Selecione o Produto --</option>
                     </select>
-                    <span asp-validation-for="Products" class="text-danger"></span>
+                    <span asp-validation-for="NewManualMovement.ProductId" class="text-danger"></span>
                 </td>
-                <td><label for="cosif">Cosif:</label></td>
+                <td><label for="NewManualMovement.CosifId">Cosif:</label></td>
                 <td>
-                    <select asp-for="Cosifs">
-                        <option value="">Selecione</option>
-                        <option value="cosif1">Cosif 1</option>
-                        <option value="cosif2">Cosif 2</option>
+                    <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control"
+                            asp-items="@(new SelectList(Model.Cosifs, "CosifId", "ClassificationCode"))">
+                        <option value="">-- Selecione o Cosif --</option>
                     </select>
-                    <span asp-validation-for="Cosifs" class="text-danger"></span>
+                    <span asp-validation-for="NewManualMovement.CosifId" class="text-danger"></span>
                 </td>
             </tr>
             <tr>
@@ -63,3 +61,26 @@
         </table>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const cosifData = @Html.Raw(Json.Serialize(Model.Cosifs));
+
+        $('#productSelected').on('change', function () {
+            const valorSelecionado = $(this).val();
+            const $cosifSelect = $('#cosifSelect');
+            console.log("Produto selecionado:", valorSelecionado);
+            console.log("Lista cosif", cosifData);
+
+            $cosifSelect.html('<option value="">-- Selecione o Cosif --</option>');
+            const cosifFiltrados = cosifData.filter(c => c.productId === valorSelecionado);
+            console.log("Lista cosif filtrada", cosifFiltrados);
+
+        $.each(cosifFiltrados, function (index, c) {
+            $cosifSelect.append($('<option>', {
+                value: c.codifId,
+                text: c.classificationCode
+            }));
+        });
+    });
+</script>
+

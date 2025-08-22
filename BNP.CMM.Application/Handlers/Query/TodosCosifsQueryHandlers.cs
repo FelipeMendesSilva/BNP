@@ -13,7 +13,7 @@ namespace BNP.CMM.Application.Handlers.Query
 
         public async Task<List<GetCosifsResponse>> Handle(GetCosifsRequest request, CancellationToken cancellationToken)
         {
-            return new List<GetCosifsResponse>() { new GetCosifsResponse() { CosifId = "1234567890", ProdutoId = "abcde", CodigoClassificacao = "code"} };
+            return new List<GetCosifsResponse>() { new GetCosifsResponse() { CosifId = "1234567890", ProductId = "abcd", ClassificationCode = "code"} };
         }
     }
 }
