@@ -4,6 +4,6 @@ namespace BNP.CMM.Domain.Interfaces
 {
     public interface IManualMovementsRepository
     {
-        Task<List<Product>> CreateAsync(CancellationToken cancellationToken);
+        Task CreateAsync(ManualMovement movement, CancellationToken cancellationToken);
     }
 }

@@ -32,8 +32,11 @@ namespace BNP.CMM.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await _mediatr.Send(model.NewManualMovement, cancellationToken); // Retorna os erros para a View
+                return RedirectToAction("Error");
+
             }
+            await _mediatr.Send(model.NewManualMovement, cancellationToken); // Retorna os erros para a View
+
 
             // Processa os dados válidos
             return RedirectToAction("Index");

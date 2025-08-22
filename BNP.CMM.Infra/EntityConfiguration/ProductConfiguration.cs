@@ -10,22 +10,22 @@ namespace BNP.CMM.Infra.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("PRODUTO");
+            builder.ToTable("produto");
 
-            builder.HasKey(p => p.ProdutoId);
+            builder.HasKey(p => p.ProductId);
 
-            builder.Property(p => p.ProdutoId)
-                   .HasColumnName("COD_PRODUTO")
+            builder.Property(p => p.ProductId)
+                   .HasColumnName("cod_produto")
                    .HasMaxLength(4)
                    .IsRequired();
 
             builder.Property(p => p.Description)
-                   .HasColumnName("DES_PRODUTO")
+                   .HasColumnName("des_produto")
                    .HasMaxLength(30)
                    .IsRequired();
 
             builder.Property(p => p.Status)
-                   .HasColumnName("STA_STATUS")
+                   .HasColumnName("sta_status")
                    .HasMaxLength(1);
         }
     }

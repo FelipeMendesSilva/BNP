@@ -8,60 +8,58 @@
     {
         public void Configure(EntityTypeBuilder<ManualMovement> builder)
         {
-            builder.ToTable("MOVIMENTO_MANUAL");
+            builder.ToTable("movimento_manual");
 
-            builder.HasKey(mm =>  mm.Entrynumber );
+            builder.HasKey(mm => mm.EntryNumber);
 
-
-            builder.Property(mm => mm.Entrynumber)
-                   .HasColumnName("NUM_LANCAMENTO")
+            builder.Property(mm => mm.EntryNumber)
+                   .HasColumnName("num_lancamento")
                    .IsRequired();
 
             builder.Property(mm => mm.Month)
-                   .HasColumnName("DAT_MES")
+                   .HasColumnName("dat_mes")
                    .IsRequired();
 
             builder.Property(mm => mm.Year)
-                   .HasColumnName("DAT_ANO")
+                   .HasColumnName("dat_ano")
                    .IsRequired();
 
-            builder.Property(mm => mm.ProdutoId)
-                   .HasColumnName("COD_PRODUTO")
+            builder.Property(mm => mm.ProductId)
+                   .HasColumnName("cod_produto")
                    .HasMaxLength(4)
                    .IsRequired();
 
             builder.Property(mm => mm.CosifId)
-                   .HasColumnName("COD_COSIF")
+                   .HasColumnName("cod_cosif")
                    .HasMaxLength(11)
                    .IsRequired();
 
             builder.Property(mm => mm.MovementDate)
-                   .HasColumnName("DAT_MOVIMENTO")
+                   .HasColumnName("dat_movimento")
                    .IsRequired();
 
             builder.Property(mm => mm.Value)
-                   .HasColumnName("VAL_VALOR")
+                   .HasColumnName("val_valor")
                    .HasColumnType("decimal(18,2)")
                    .IsRequired();
 
             builder.Property(mm => mm.Description)
-                   .HasColumnName("DES_DESCRICAO")
+                   .HasColumnName("des_descricao")
                    .HasMaxLength(50)
                    .IsRequired();
 
             builder.Property(mm => mm.UserCode)
-                   .HasColumnName("COD_USUARIO")
+                   .HasColumnName("cod_usuario")
                    .HasMaxLength(15)
                    .IsRequired();
 
-            builder.HasOne<Cosif>()
-                   .WithMany()
-                   .HasForeignKey(mm => new { mm.ProdutoId, mm.CosifId });
+            builder.HasOne(mm => mm.Cosif)
+               .WithMany()
+               .HasForeignKey(mm => new { mm.ProductId, mm.CosifId });
 
-            builder.HasOne<Product>()
+            builder.HasOne(mm => mm.Product)
                    .WithMany()
-                   .HasForeignKey(mm => mm.ProdutoId);
+                   .HasForeignKey(mm => mm.ProductId);
         }
     }
-
 }

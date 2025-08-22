@@ -14,9 +14,10 @@ namespace BNP.CMM.Infra.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> CreateAsync(CancellationToken cancellationToken)
+        public async Task CreateAsync(ManualMovement movement, CancellationToken cancellationToken)
         {
-            return await _context.Produtos.ToListAsync();
+            await _context.MovimentosManuais.AddAsync(movement, cancellationToken);
+            return;
         }
     }
 }
