@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BNP.CMM.Domain.Entities;
 using BNP.CMM.Infra.EntityConfiguration;
+using BNP.CMM.Domain.DTO;
 
 namespace BNP.CMM.Infra.Context
 {
@@ -20,6 +21,8 @@ namespace BNP.CMM.Infra.Context
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CosifConfiguration());
             modelBuilder.ApplyConfiguration(new ManualMovimentConfiguration());
+
+            modelBuilder.Entity<FunctionManualMovementsResult>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
             // Configurações adicionais

@@ -1,4 +1,6 @@
-﻿using BNP.CMM.Infra.IoC;
+﻿using BNP.CMM.Application.AutoMapper;
+using BNP.CMM.Application.Requests;
+using BNP.CMM.Infra.IoC;
 
 namespace BNP.CMM.API.IoC
 {
@@ -7,8 +9,9 @@ namespace BNP.CMM.API.IoC
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.RegisterInfraServices(configuration);
-            //services.AddScoped<IProdutoService, ProdutoService>();
-            //services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssembly(typeof(GetProductsRequest).Assembly));
         }
     }
 }

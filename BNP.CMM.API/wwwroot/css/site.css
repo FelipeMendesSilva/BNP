@@ -8,6 +8,18 @@ html {
   }
 }
 
+.header-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.logo {
+    height: 50px; 
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -52,3 +64,25 @@ textarea {
     .buttons button {
         margin-right: 10px;
     }
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa; 
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+/* Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

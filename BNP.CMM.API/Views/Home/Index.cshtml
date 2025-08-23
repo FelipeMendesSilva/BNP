@@ -4,68 +4,90 @@
 }
 
 <div>
-    <form asp-action="Incluir" asp-controller="Home" method="post">
+    <form id="cmmform" asp-action="Incluir" asp-controller="Home" method="post">
         <table>
             <tr>
                 <td><label for="mes">Mês:</label></td>
                 <td>
-                    <input asp-for="NewManualMovement.Month" />
-                    <span asp-validation-for="NewManualMovement.Month" class="text-danger"></span>
+                    <input asp-for="NewManualMovement.Month" required disabled />
                 </td>
 
                 <td><label for="ano">Ano:</label></td>
                 <td>
-                    <input asp-for="NewManualMovement.Year" />
-                    <span asp-validation-for="NewManualMovement.Year" class="text-danger"></span>
+                    <input asp-for="NewManualMovement.Year" required disabled />
                 </td>
             </tr>
             <tr>
                 <td><label for="NewManualMovement.ProductId">Produto:</label></td>
                 <td>
                     <select id="productSelected" asp-for="NewManualMovement.ProductId" class="form-control"
-                            asp-items="@(new SelectList(Model.Products, "ProductId", "Description"))">
+                            asp-items="@(new SelectList(Model.Products, "ProductId", "Description"))" required disabled>
                         <option value="">-- Selecione o Produto --</option>
                     </select>
-                    <span asp-validation-for="NewManualMovement.ProductId" class="text-danger"></span>
                 </td>
                 <td><label for="NewManualMovement.CosifId">Cosif:</label></td>
                 <td>
-                    <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control">
-                            
+                    <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control" required disabled>
+
                         <option value="">-- Selecione o Cosif --</option>
                     </select>
-                    <span asp-validation-for="NewManualMovement.CosifId" class="text-danger"></span>
                 </td>
             </tr>
             <tr>
                 <td><label for="valor">Valor:</label></td>
                 <td>
-                    <input asp-for="NewManualMovement.Amount" />
-                    <span asp-validation-for="NewManualMovement.Amount" class="text-danger"></span>
+                    <input asp-for="NewManualMovement.Amount" required disabled />
                 </td>
             </tr>
             <tr>
                 <td><label for="descricao">Descrição:</label></td>
                 <td colspan="3">
-                    <textarea asp-for="NewManualMovement.Description"></textarea>
-                    <span asp-validation-for="NewManualMovement.Description" class="text-danger"></span>
+                    <textarea asp-for="NewManualMovement.Description" required disabled></textarea>
                 </td>
             </tr>
             <tr>
                 <td colspan="4" class="buttons">
                     <button type="reset">Limpar</button>
-                    <button type="button">Novo</button>
-                    <button type="submit">Incluir</button>
+                    <button id="enableFormBtn" type="button">Novo</button>
+                    <button id="submitBtn" type="submit">Incluir</button>
                 </td>
             </tr>
         </table>
     </form>
+    <br><br><br>
+    <table id="manualMovementsTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mês</th>
+                <th>Ano</th>
+                <th>Código do Produto</th>
+                <th>Descrição do Produto</th>
+                <th>NR Lançamento</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movement in Model.ManualMovements)
+            {
+                <tr>
+                    <td>@movement.Month.ToString()</td>
+                    <td>@movement.Year.ToString()</td>
+                    <td>@movement.ProductId</td>
+                    <td>@movement.ProductDescription</td>
+                    <td>@movement.EntryNumber</td>
+                    <td>@movement.Description</td>
+                    <td>@movement.Amount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const cosifData = @Html.Raw(Json.Serialize(Model.Cosifs));
 
-        $('#productSelected').on('change', function () {
+    $('#productSelected').on('change', function () {
             const valorSelecionado = $(this).val();
             const $cosifSelect = $('#cosifSelect');
             console.log("Produto selecionado:", valorSelecionado);
@@ -82,5 +104,61 @@
             }));
         });
     });
+
+    $(document).ready(function () {
+        $('#manualMovementsTable').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
+            }
+        });
+    });
+
+    function enableForm(cmmform) {
+      $('#cmmform').find('input, textarea, select, button').prop('disabled', false);
+    }
+
+    $('#enableFormBtn').on('click', function() {
+      enableForm('#cmmform');
+    });
+
+    //validacao form
+
+      $('#cmmform').on('submit', function (e) {
+      let valido = true;
+      let message = "";
+      let mes = $('input[name="NewManualMovement.Month"]').val();
+      let ano = $('input[name="NewManualMovement.Year"]').val();
+      let valor = $('input[name="NewManualMovement.Amount"]').val();
+      let descricao = $('textarea').val() || "";
+
+
+      if (!mes || mes < 1 || mes > 12) {
+        message = "Mês inválido.\n";
+        valido = false;
+      }
+
+      if (!ano || ano < 1900 || ano > 2200) {
+        message = message + "Ano inválido.\n";
+        valido = false;
+      }
+
+      if (!valor || valor < 0.01) {
+        message = message + "Valor inválido.\n";
+        valido = false;
+      }
+      console.log("Descrição:", descricao);
+
+      if (!descricao || descricao.trim().length === 0) {
+        message = message + "Descrição obrigatória.\n";
+        valido = false;
+      }
+
+      if(!valido){
+          alert(message);
+          e.preventDefault(); // Impede envio se inválido
+      }
+
+    });
+
 </script>
 

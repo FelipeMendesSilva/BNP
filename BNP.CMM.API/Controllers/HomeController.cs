@@ -22,7 +22,8 @@ namespace BNP.CMM.API.Controllers
             var model = new CmmViewModel()
             {
                 Products = await _mediatr.Send(new GetProductsRequest(), cancellationToken),
-                Cosifs = await _mediatr.Send(new GetCosifsRequest(), cancellationToken)
+                Cosifs = await _mediatr.Send(new GetCosifsRequest(), cancellationToken),
+                ManualMovements = await _mediatr.Send(new GetManualMovementsRequest(), cancellationToken)
             };
             return View(model);
         }
@@ -35,7 +36,7 @@ namespace BNP.CMM.API.Controllers
                 return RedirectToAction("Error");
 
             }
-            await _mediatr.Send(model.NewManualMovement, cancellationToken); // Retorna os erros para a View
+            await _mediatr.Send(model.NewManualMovement, cancellationToken); 
 
 
             // Processa os dados válidos

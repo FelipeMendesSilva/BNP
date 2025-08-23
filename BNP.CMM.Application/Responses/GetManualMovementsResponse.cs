@@ -2,14 +2,12 @@
 {
     public class GetManualMovementsResponse
     {
-        public int Mes { get; set; }
-        public int Ano { get; set; }
-        public long NumeroLancamento { get; set; }
-        public required string ProdutoId { get; set; }
-        public required string CosifId { get; set; }
-        public DateTime DataMovimento { get; set; }
-        public decimal Valor { get; set; }
-        public required string Descricao { get; set; }
-        public required string CodigoUsuario { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
+        public required string ProductId { get; set; }
+        public required string ProductDescription { get; set; }
+        public long EntryNumber { get; set; }
+        public required string Description { get; set; }
+        public decimal Amount { get; set; }
     }
 }
