@@ -30,8 +30,8 @@
                 </td>
                 <td><label for="NewManualMovement.CosifId">Cosif:</label></td>
                 <td>
-                    <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control"
-                            asp-items="@(new SelectList(Model.Cosifs, "CosifId", "ClassificationCode"))">
+                    <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control">
+                            
                         <option value="">-- Selecione o Cosif --</option>
                     </select>
                     <span asp-validation-for="NewManualMovement.CosifId" class="text-danger"></span>
@@ -77,8 +77,8 @@
 
         $.each(cosifFiltrados, function (index, c) {
             $cosifSelect.append($('<option>', {
-                value: c.codifId,
-                text: c.classificationCode
+                value: c.cosifId,
+                text: c.cosifId
             }));
         });
     });

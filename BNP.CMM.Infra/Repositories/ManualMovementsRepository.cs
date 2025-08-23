@@ -14,10 +14,11 @@ namespace BNP.CMM.Infra.Repositories
             _context = context;
         }
 
-        public async Task CreateAsync(ManualMovement movement, CancellationToken cancellationToken)
+        public async Task<bool> CreateAsync(ManualMovement movement, CancellationToken cancellationToken)
         {
             await _context.MovimentosManuais.AddAsync(movement, cancellationToken);
-            return;
+            var success = await _context.SaveChangesAsync();
+            return success > 0;
         }
     }
 }

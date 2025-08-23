@@ -14,7 +14,7 @@
 
             builder.Property(mm => mm.EntryNumber)
                    .HasColumnName("num_lancamento")
-                   .IsRequired();
+                   .ValueGeneratedOnAdd();
 
             builder.Property(mm => mm.Month)
                    .HasColumnName("dat_mes")
@@ -38,7 +38,7 @@
                    .HasColumnName("dat_movimento")
                    .IsRequired();
 
-            builder.Property(mm => mm.Value)
+            builder.Property(mm => mm.Amount)
                    .HasColumnName("val_valor")
                    .HasColumnType("decimal(18,2)")
                    .IsRequired();
@@ -57,9 +57,6 @@
                .WithMany()
                .HasForeignKey(mm => new { mm.ProductId, mm.CosifId });
 
-            builder.HasOne(mm => mm.Product)
-                   .WithMany()
-                   .HasForeignKey(mm => mm.ProductId);
         }
     }
 }
