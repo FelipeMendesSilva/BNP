@@ -2,7 +2,12 @@
 @{
     ViewData["Title"] = "BNP CMM";
 }
-
+@if (TempData["Alerta"] != null)
+{
+    <script type="text/javascript">
+        alert("@TempData["Alerta"]");
+    </script>
+}
 <div>
     <form id="cmmform" asp-action="Incluir" asp-controller="Home" method="post">
         <table>
@@ -28,7 +33,6 @@
                 <td><label for="NewManualMovement.CosifId">Cosif:</label></td>
                 <td>
                     <select id="cosifSelect" asp-for="NewManualMovement.CosifId" class="form-control" required disabled>
-
                         <option value="">-- Selecione o Cosif --</option>
                     </select>
                 </td>
@@ -42,7 +46,8 @@
             <tr>
                 <td><label for="descricao">Descrição:</label></td>
                 <td colspan="3">
-                    <textarea asp-for="NewManualMovement.Description" required disabled></textarea>
+                    <textarea id = "descrptionId" asp-for="NewManualMovement.Description" maxlength="50" required disabled></textarea>
+                    <span id="contador">0/50</span>
                 </td>
             </tr>
             <tr>
@@ -90,12 +95,9 @@
     $('#productSelected').on('change', function () {
             const valorSelecionado = $(this).val();
             const $cosifSelect = $('#cosifSelect');
-            console.log("Produto selecionado:", valorSelecionado);
-            console.log("Lista cosif", cosifData);
 
             $cosifSelect.html('<option value="">-- Selecione o Cosif --</option>');
             const cosifFiltrados = cosifData.filter(c => c.productId === valorSelecionado);
-            console.log("Lista cosif filtrada", cosifFiltrados);
 
         $.each(cosifFiltrados, function (index, c) {
             $cosifSelect.append($('<option>', {
@@ -121,39 +123,44 @@
       enableForm('#cmmform');
     });
 
+    $('#descrptionId').on('input', function () {
+        let count = $(this).val().length;
+        $('#contador').text(count + "/50");
+    });
+
     //validacao form
 
       $('#cmmform').on('submit', function (e) {
-      let valido = true;
+      let valid = true;
       let message = "";
-      let mes = $('input[name="NewManualMovement.Month"]').val();
-      let ano = $('input[name="NewManualMovement.Year"]').val();
-      let valor = $('input[name="NewManualMovement.Amount"]').val();
-      let descricao = $('textarea').val() || "";
+      let month = $('input[name="NewManualMovement.Month"]').val();
+      let year = $('input[name="NewManualMovement.Year"]').val();
+      let amount = $('input[name="NewManualMovement.Amount"]').val();
+      let description = $('textarea').val() || "";
 
 
-      if (!mes || mes < 1 || mes > 12) {
+      if (!month || month < 1 || month > 12) {
         message = "Mês inválido.\n";
-        valido = false;
+        valid = false;
       }
 
-      if (!ano || ano < 1900 || ano > 2200) {
+      if (!year || year < 1900 || year > 2200) {
         message = message + "Ano inválido.\n";
-        valido = false;
+        valid = false;
       }
 
-      if (!valor || valor < 0.01) {
+      if (!amount || amount < 0.01) {
         message = message + "Valor inválido.\n";
-        valido = false;
+        valid = false;
       }
       console.log("Descrição:", descricao);
 
-      if (!descricao || descricao.trim().length === 0) {
+      if (!description || description.trim().length === 0 ) {
         message = message + "Descrição obrigatória.\n";
-        valido = false;
+        valid = false;
       }
 
-      if(!valido){
+      if(!valid){
           alert(message);
           e.preventDefault(); // Impede envio se inválido
       }

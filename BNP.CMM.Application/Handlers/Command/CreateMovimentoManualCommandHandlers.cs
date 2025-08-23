@@ -5,14 +5,14 @@ using MediatR;
 
 namespace BNP.CMM.Application.Handlers.Command
 {
-    public class CreateMovimentoManualCommandHandlers : IRequestHandler<CreateMovimentoManualRequest, bool>
+    public class CreateMovimentoManualCommandHandlers : IRequestHandler<CreateManualMovementRequest, bool>
     {
         private readonly IManualMovementsRepository _manualMovementsRepository;
         public CreateMovimentoManualCommandHandlers(IManualMovementsRepository manualMovementsRepository)
         {
             _manualMovementsRepository = manualMovementsRepository;
         }
-        public async Task<bool> Handle(CreateMovimentoManualRequest novoMovimentoManual, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateManualMovementRequest novoMovimentoManual, CancellationToken cancellationToken)
         {
             var movementEntity = new ManualMovement(
                 novoMovimentoManual.Month,

@@ -1,10 +1,14 @@
 using BNP.CMM.API.IoC;
 using BNP.CMM.Application.Requests;
+using BNP.CMM.Application.Validators;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateManualMovementRequestValidator>();
+
 builder.Services.RegisterServices(builder.Configuration);
 
 var app = builder.Build();
