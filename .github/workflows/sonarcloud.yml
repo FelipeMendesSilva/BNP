@@ -24,7 +24,7 @@ jobs:
         run: dotnet sonarscanner begin /k:"project-key" /o:"organization" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Build solution
-        run: CMM.API.sln
+        run: dotnet build CMM.API.sln
 
       - name: End SonarCloud analysis
         run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
