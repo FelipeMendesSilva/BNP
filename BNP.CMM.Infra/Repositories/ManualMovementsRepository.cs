@@ -16,7 +16,7 @@ namespace BNP.CMM.Infra.Repositories
         public async Task<bool> CreateAsync(ManualMovement movement, CancellationToken cancellationToken)
         {
             await _context.MovimentosManuais.AddAsync(movement, cancellationToken);
-            var success = await _context.SaveChangesAsync();
+            var success = await _context.SaveChangesAsync(cancellationToken);
             return success > 0;
         }
     }
