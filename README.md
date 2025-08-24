@@ -1,10 +1,10 @@
-# BNP - onsulta de Movimentos Manuais 
+# BNP - Consulta de Movimentos Manuais 
 
 Aplicação full-stack que lista e insere movimentos manuais no banco de dados.
 
 ## Funcionalidades
 
-. Inserção de movimentos manuais
+. Inserção de movimentos manuais  
 . Exibição dos mocimentos manuais  
 
 ## Tecnologias
@@ -40,7 +40,7 @@ docker-compose up --build
 ### .Visual Studio
 
 Para executar a aplicação no Visual Studio altere a ConnectionString de "Default" para "PostgresConnection".
-A opção "Defaul" é a ConnectionString que conecta ao Postgres do container Docker.
+A opção "Default" é a ConnectionString que conecta ao Postgres do container Docker.
 
 ```
 namespace BNP.CMM.Infra.IoC
