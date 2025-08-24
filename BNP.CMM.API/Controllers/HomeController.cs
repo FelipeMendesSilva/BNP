@@ -24,12 +24,20 @@ namespace BNP.CMM.API.Controllers
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var model = await CreateIndexModel(cancellationToken);
+            try
+            {
+                var model = await CreateIndexModel(cancellationToken);
 
-            if (model == null)
-                TempData["Erro"] = "Erro ao carregar formulario.";
+                if (model == null)
+                    TempData["Erro"] = "Erro ao carregar formulario.";
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado");
+                return RedirectToAction("Error");
+            }
         }
 
         [HttpPost]
@@ -58,7 +66,7 @@ namespace BNP.CMM.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro inesperado");
-                return RedirectToAction("Error");                
+                return RedirectToAction("Error");
             }
         }
 

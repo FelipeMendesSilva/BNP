@@ -22,7 +22,7 @@ namespace BNP.CMM.Application.Validators
                 .NotNull().WithMessage("O Cosif é obrigatório.");
 
             RuleFor(x => x.Amount)
-                .InclusiveBetween(0.01M, 999999.99M).WithMessage("O valor deve ser maior que 0,01 e inferior a 1.000.000.");
+                .GreaterThan(0.01M).WithMessage("O valor deve ser maior que 1 centavo.");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("A descrição é obrigatória.")
