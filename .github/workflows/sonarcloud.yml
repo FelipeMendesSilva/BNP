@@ -17,7 +17,7 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: name: Install SonarScanner
+      - name: Install SonarScanner
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Begin SonarCloud analysis
