@@ -138,7 +138,8 @@
     });
 
     $('#NewManualMovementAmount').on('input', function () {
-        let val = $(this).val();
+        let val = $(this).val().replace(',', '.'); // trata vírgula como ponto
+
         if (val.includes('.')) {
             let parts = val.split('.');
             if (parts[1].length > 2) {
@@ -148,9 +149,13 @@
     });
 
     $('#NewManualMovementAmount').on('blur', function () {
-        let val = parseFloat($(this).val().replace(',', '.'));
-        if (!isNaN(val)) {
-            $(this).val(val.toFixed(2).replace('.', ','));
+        let val = $(this).val().replace(',', '.');
+        let num = parseFloat(val);
+
+        if (!isNaN(num)) {
+            $(this).val(num.toFixed(2).replace('.', ','));
+        } else {
+            $(this).val(''); // limpa se não for número válido
         }
     });
 
