@@ -21,7 +21,7 @@ namespace BNP.CMM.Application.Handlers.Query
 
         public async Task<List<GetManualMovementsResponse>> Handle(GetManualMovementsRequest request, CancellationToken cancellationToken)
         {
-            var result = await _dbContext.Set<FunctionManualMovementsResult>().FromSqlRaw( "select * from fn_consulta_movimento_manual();").ToListAsync();
+            var result = await _dbContext.Set<FunctionManualMovementsResult>().FromSqlRaw( "select * from fn_consulta_movimento_manual();").ToListAsync(cancellationToken);
             var response = _mapper.Map<List<GetManualMovementsResponse>>(result);
 
             return response;

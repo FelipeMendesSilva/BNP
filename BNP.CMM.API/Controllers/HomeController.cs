@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace BNP.CMM.API.Controllers
 {
@@ -45,10 +46,17 @@ namespace BNP.CMM.API.Controllers
         {
             try
             {
-                ValidationResult result = await _validator.ValidateAsync(model.NewManualMovement);
+                if (model.NewManualMovement == null)
+                {
+                    TempData["Erro"] = "Movimento Manual invalido";
+                    return RedirectToAction("Index");
+                }
+
+                ValidationResult result = await _validator.ValidateAsync(model.NewManualMovement, cancellationToken);
                 if (!result.IsValid)
                 {
                     TempData["Erro"] = "Movimento Manual invalido";
+                    return RedirectToAction("Index");
                 }
 
                 var success = await _mediatr.Send(model.NewManualMovement, cancellationToken);
@@ -59,6 +67,7 @@ namespace BNP.CMM.API.Controllers
                 else
                 {
                     TempData["Alerta"] = "Dados salvos com sucesso!";
+                    _logger.LogInformation("Manual Movement created: {ManualMovement}", JsonSerializer.Serialize(model.NewManualMovement));
                 }
 
                 return RedirectToAction("Index");
@@ -69,11 +78,10 @@ namespace BNP.CMM.API.Controllers
                 return RedirectToAction("Error");
             }
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+                
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
 
         private async Task<CmmViewModel?> CreateIndexModel(CancellationToken cancellationToken)
@@ -82,7 +90,7 @@ namespace BNP.CMM.API.Controllers
             var cosifs = await _mediatr.Send(new GetCosifsRequest(), cancellationToken);
             var movements = await _mediatr.Send(new GetManualMovementsRequest(), cancellationToken);
 
-            if (!products.Any() || !cosifs.Any())
+            if (products.Count == 0 || cosifs.Count == 0)
                 return null;
 
             var model = new CmmViewModel()

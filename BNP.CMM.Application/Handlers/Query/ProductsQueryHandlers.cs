@@ -16,7 +16,7 @@ namespace BNP.CMM.Application.Handlers.Query
 
         public async Task<List<GetProductsResponse>> Handle(GetProductsRequest request, CancellationToken cancellationToken)
         {
-            var productsList = await _dbContext.Produtos.ToListAsync();
+            var productsList = await _dbContext.Produtos.ToListAsync(cancellationToken);
             var response = new List<GetProductsResponse>();
 
             foreach (var product in productsList)

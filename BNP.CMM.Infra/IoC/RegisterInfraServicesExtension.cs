@@ -11,10 +11,9 @@ namespace BNP.CMM.Infra.IoC
     {
         public static void RegisterInfraServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Exemplo de injeção de dependência
             services.AddScoped<IManualMovementsRepository, ManualMovementsRepository>();
-            var connectionString = configuration.GetConnectionString("PostgresConnection");
 
+            var connectionString = configuration.GetConnectionString("Default");
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(connectionString));
         }

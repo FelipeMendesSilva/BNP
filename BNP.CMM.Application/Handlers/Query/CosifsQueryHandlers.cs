@@ -16,7 +16,7 @@ namespace BNP.CMM.Application.Handlers.Query
 
         public async Task<List<GetCosifsResponse>> Handle(GetCosifsRequest request, CancellationToken cancellationToken)
         {
-            var cosifsList = await _dbContext.ProdutosCosif.ToListAsync();
+            var cosifsList = await _dbContext.ProdutosCosif.ToListAsync(cancellationToken);
             var response = new List<GetCosifsResponse>();
 
             foreach (var cosifs in cosifsList) {

@@ -10,12 +10,12 @@
             SetStatus(status);
         }
 
-        public  string  CosifId { get; private set; }
-        public string ProductId { get; private set; }
-        public string ClassificationCode { get; private set; }
-        public string Status { get; private set; }
+        public  string  CosifId { get; private set; } = null!;
+        public string ProductId { get; private set; } = null!;
+        public string ClassificationCode { get; private set; } = null!;
+        public string Status { get; private set; } = null!;
 
-        public virtual Product Product { get; private set; }
+        public virtual Product? Product { get; set; }
 
         
         public void SetCosifId(string cosifId) => CosifId = cosifId;

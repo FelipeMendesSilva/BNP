@@ -8,9 +8,10 @@
             SetDescription(description);
             SetStatus(status);
         }
-        public string ProductId { get; set; }
-        public string Description { get; set; }
-        public string Status { get; set; }
+
+        public string ProductId { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string Status { get; set; } = null!;
 
         public void SetProdutoId(string produtoId) => ProductId = produtoId;
         public void SetDescription(string description) => Description = description;

@@ -14,7 +14,7 @@
 }
 <div>
     <form id="cmmform" asp-action="Incluir" asp-controller="Home" method="post">
-        <table>
+        <table aria-hidden="true">
             <tr>
                 <td><label for="mes">Mês:</label></td>
                 <td>
@@ -80,8 +80,8 @@
             @foreach (var movement in Model.ManualMovements)
             {
                 <tr>
-                    <td>@movement.Month.ToString()</td>
-                    <td>@movement.Year.ToString()</td>
+                    <td>@movement.Month</td>
+                    <td>@movement.Year</td>
                     <td>@movement.ProductId</td>
                     <td>@movement.ProductDescription</td>
                     <td>@movement.EntryNumber</td>
@@ -115,9 +115,12 @@
         $('#manualMovementsTable').DataTable({
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
-            }
+            },
+            ordering: true,     // permite ordenação manual por clique
+            order: []           // desativa ordenação automática inicial
         });
     });
+
 
     function enableForm(cmmform) {
       $('#cmmform').find('input, textarea, select, button').prop('disabled', false);

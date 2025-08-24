@@ -8,6 +8,6 @@ namespace BNP.CMM.API.Models
         public CreateManualMovementRequest? NewManualMovement { get; set; }
         public List<GetProductsResponse>? Products { get; set; }
         public List<GetCosifsResponse>? Cosifs { get; set; }
-        public List<GetManualMovementsResponse>? ManualMovements { get; set; }
+        public List<GetManualMovementsResponse> ManualMovements { get; set; } = new List<GetManualMovementsResponse>();
     }
 }
