@@ -13,7 +13,7 @@ namespace BNP.CMM.Infra.IoC
         {
             services.AddScoped<IManualMovementsRepository, ManualMovementsRepository>();
 
-            var connectionString = configuration.GetConnectionString("PostgresConnection");
+            var connectionString = configuration.GetConnectionString("Default");
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(connectionString));
         }
