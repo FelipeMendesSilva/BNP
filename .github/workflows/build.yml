@@ -39,7 +39,7 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: SonarCloud Begin
         run: |
-          dotnet sonarscanner begin /k:"BNP" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /s:"BNP.CMM.API.sln"
+          dotnet sonarscanner begin /k:"FelipeMendesSilva_BNP" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /s:"BNP.CMM.API.sln"
 
       - name: Build
         run: dotnet build BNP.CMM.API/BNP.CMM.API.sln
