@@ -37,6 +37,17 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: SonarCloud Begin
+        run: |
+          dotnet sonarscanner begin /k:"BNP" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /s:"BNP.CMM.API.sln"
+
+      - name: Build
+        run: dotnet build BNP.CMM.API/BNP.CMM.API.sln
+
+      - name: SonarCloud End
+        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+          
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
