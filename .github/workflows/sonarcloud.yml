@@ -21,7 +21,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Begin SonarCloud analysis
-        run: dotnet sonarscanner begin /k:"BNP.CMM.API" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.branch.name="main"
+        run: dotnet sonarscanner begin /k:"BNP" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.branch.name="main"
 
       - name: Build solution
         run: dotnet build BNP.CMM.API/CMM.API.sln
