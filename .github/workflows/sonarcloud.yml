@@ -17,11 +17,14 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install SonarScanner
+      - name: name: Install SonarScanner
         run: dotnet tool install --global dotnet-sonarscanner
 
-      - name: Run SonarCloud analysis
-        run: |
-          dotnet sonarscanner begin /k:"project-key" /o:"organization" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
-          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      - name: Begin SonarCloud analysis
+        run: dotnet sonarscanner begin /k:"project-key" /o:"organization" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+
+      - name: Build solution
+        run: CMM.API.sln
+
+      - name: End SonarCloud analysis
+        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
