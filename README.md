@@ -9,7 +9,7 @@ Aplicação full-stack que lista e insere movimentos manuais no banco de dados.
 
 ## Tecnologias
 
-Back-end/Front-end: ASP.NET Core (.NET 8) — container Docker
+Back-end/Front-end: ASP.NET Core (.NET 8)  
 Containerização: Docker
 
 ### .Estrutura do Projeto  
