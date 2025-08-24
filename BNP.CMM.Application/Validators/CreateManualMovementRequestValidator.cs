@@ -1,10 +1,5 @@
 ﻿using BNP.CMM.Application.Requests;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BNP.CMM.Application.Validators
 {
@@ -27,7 +22,7 @@ namespace BNP.CMM.Application.Validators
                 .NotNull().WithMessage("O Cosif é obrigatório.");
 
             RuleFor(x => x.Amount)
-                .GreaterThan(0.01M).WithMessage("O valor deve ser maior que 1 centavo.");
+                .InclusiveBetween(0.01M, 999999.99M).WithMessage("O valor deve ser maior que 0,01 e inferior a 1.000.000.");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("A descrição é obrigatória.")

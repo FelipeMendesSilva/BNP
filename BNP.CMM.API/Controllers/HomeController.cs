@@ -1,13 +1,11 @@
 using BNP.CMM.API.Models;
-using BNP.CMM.Application.Extensions;
 using BNP.CMM.Application.Requests;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Threading;
 
 namespace BNP.CMM.API.Controllers
 {
@@ -29,7 +27,7 @@ namespace BNP.CMM.API.Controllers
             var model = await CreateIndexModel(cancellationToken);
 
             if (model == null)
-                TempData["Alerta"] = "Erro ao carregar formulario.";
+                TempData["Erro"] = "Erro ao carregar formulario.";
 
             return View(model);
         }
@@ -37,22 +35,31 @@ namespace BNP.CMM.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Incluir(CmmViewModel model, CancellationToken cancellationToken)
         {
-            ValidationResult result = await _validator.ValidateAsync(model.NewManualMovement);
+            try
+            {
+                ValidationResult result = await _validator.ValidateAsync(model.NewManualMovement);
+                if (!result.IsValid)
+                {
+                    TempData["Erro"] = "Movimento Manual invalido";
+                }
 
-            if (!result.IsValid)
-            {                
-                TempData["Alerta"] = "Movimento Manual invalido";
+                var success = await _mediatr.Send(model.NewManualMovement, cancellationToken);
+                if (!success)
+                {
+                    TempData["Erro"] = "Erro ao processar Movimento Manual. Tente novamente.";
+                }
+                else
+                {
+                    TempData["Alerta"] = "Dados salvos com sucesso!";
+                }
+
                 return RedirectToAction("Index");
             }
-
-            var success = await _mediatr.Send(model.NewManualMovement, cancellationToken);
-            if (!success) {
-                TempData["Alerta"] = "Erro ao processar Movimento Manual. Tente novamente.";
-                return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado");
+                return RedirectToAction("Error");                
             }
-
-            TempData["Alerta"] = "Dados salvos com sucesso!";
-            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

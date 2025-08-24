@@ -8,6 +8,10 @@
         alert("@TempData["Alerta"]");
     </script>
 }
+@if (TempData["Erro"] != null)
+{
+    <p class="text-warning">@TempData["Erro"]</p>
+}
 <div>
     <form id="cmmform" asp-action="Incluir" asp-controller="Home" method="post">
         <table>
@@ -40,21 +44,21 @@
             <tr>
                 <td><label for="valor">Valor:</label></td>
                 <td>
-                    <input asp-for="NewManualMovement.Amount" required disabled />
+                    <input id="NewManualMovementAmount" asp-for="NewManualMovement.Amount" step="0.01" min="0.01" max="999999.99" required disabled />
                 </td>
             </tr>
             <tr>
                 <td><label for="descricao">Descrição:</label></td>
                 <td colspan="3">
-                    <textarea id = "descrptionId" asp-for="NewManualMovement.Description" maxlength="50" required disabled></textarea>
+                    <textarea id="descrptionId" asp-for="NewManualMovement.Description" maxlength="50" required disabled></textarea>
                     <span id="contador">0/50</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="4" class="buttons">
-                    <button type="reset">Limpar</button>
+                    <button id="resetBtn" type="reset" disabled>Limpar</button>
                     <button id="enableFormBtn" type="button">Novo</button>
-                    <button id="submitBtn" type="submit">Incluir</button>
+                    <button id="submitBtn" type="submit" disabled>Incluir</button>
                 </td>
             </tr>
         </table>
@@ -117,6 +121,8 @@
 
     function enableForm(cmmform) {
       $('#cmmform').find('input, textarea, select, button').prop('disabled', false);
+      $('#resetBtn').prop('disabled', false);
+      $('#submitBtn').prop('disabled', false);
     }
 
     $('#enableFormBtn').on('click', function() {
@@ -126,6 +132,23 @@
     $('#descrptionId').on('input', function () {
         let count = $(this).val().length;
         $('#contador').text(count + "/50");
+    });
+
+    $('#NewManualMovementAmount').on('input', function () {
+        let val = $(this).val();
+        if (val.includes('.')) {
+            let parts = val.split('.');
+            if (parts[1].length > 2) {
+                $(this).val(parts[0] + '.' + parts[1].substring(0, 2));
+            }
+        }
+    });
+
+    $('#NewManualMovementAmount').on('blur', function () {
+        let val = parseFloat($(this).val().replace(',', '.'));
+        if (!isNaN(val)) {
+            $(this).val(val.toFixed(2).replace('.', ','));
+        }
     });
 
     //validacao form

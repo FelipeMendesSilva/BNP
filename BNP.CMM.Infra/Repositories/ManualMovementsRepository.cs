@@ -1,7 +1,6 @@
 ﻿using BNP.CMM.Domain.Entities;
 using BNP.CMM.Domain.Interfaces;
 using BNP.CMM.Infra.Context;
-using Microsoft.EntityFrameworkCore;
 
 namespace BNP.CMM.Infra.Repositories
 {

@@ -1,9 +1,6 @@
 ﻿using BNP.CMM.Application.AutoMapper;
 using BNP.CMM.Application.Requests;
-using BNP.CMM.Application.Validators;
 using BNP.CMM.Infra.IoC;
-using FluentValidation;
-using System;
 
 namespace BNP.CMM.API.IoC
 {
