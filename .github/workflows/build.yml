@@ -26,7 +26,7 @@ jobs:
         run: dotnet sonarscanner begin /k:"FelipeMendesSilva_BNP" /o:"felipemendessilva" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
       - name: Build solution
-        run: dotnet build BNP.CMM.API/BNP.CMM.API.sln
+        run: dotnet build BNP.CMM.API/CMM.API.sln
 
       - name: End SonarCloud analysis
         run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
