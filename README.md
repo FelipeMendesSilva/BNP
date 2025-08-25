@@ -17,6 +17,7 @@ Containerização: Docker
 ```
 ├── BNP.CMM.API/           # Aplicaçã API .NET
 │   └── Dockerfile
+├── data/                  # Persistência dos dados PostgreSQL
 ├── iniciar-app.bat        # Inicia os serviços
 ├── docker-compose.yml     # Orquestração dos serviços 
 ├── CMM.API.sln            # Solução 
