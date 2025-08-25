@@ -1,4 +1,4 @@
-﻿namespace BNP.CMM.Application.DTO
+﻿namespace BNP.CMM.Domain.DTO
 {
     public class FunctionManualMovementsResult
     {

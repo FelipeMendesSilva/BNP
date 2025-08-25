@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BNP.CMM.Application.DTO;
 using BNP.CMM.Application.Requests;
 using BNP.CMM.Application.Responses;
+using BNP.CMM.Domain.DTO;
 using BNP.CMM.Infra.Context;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
